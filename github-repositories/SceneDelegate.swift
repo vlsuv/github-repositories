@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = SearchController()
+        window?.rootViewController = UINavigationController(rootViewController: SearchController())
         window?.makeKeyAndVisible()
     }
 
