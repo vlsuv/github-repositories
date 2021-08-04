@@ -23,7 +23,15 @@ class SearchController: UIViewController {
         searchBar.placeholder = "Search"
         searchBar.sizeToFit()
         searchBar.delegate = self
+        searchBar.showsCancelButton = false
         return searchBar
+    }()
+    
+    private var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.color = Color.black
+        activityIndicator.hidesWhenStopped = true
+        return activityIndicator
     }()
     
     private var apiManager: APIManagerProtocol = APIManager()
@@ -37,6 +45,7 @@ class SearchController: UIViewController {
         
         configureNavigationController()
         configureTableView()
+        configureActivityIndicator()
     }
     
     // MARK: - Targets
@@ -66,6 +75,13 @@ class SearchController: UIViewController {
                          left: view.leftAnchor,
                          right: view.rightAnchor,
                          bottom: view.bottomAnchor)
+    }
+    
+    private func configureActivityIndicator() {
+        view.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
 }
 
@@ -110,7 +126,11 @@ extension SearchController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let query = searchBar.text else { return }
         
+        searchBar.showsCancelButton = false
+        
         searchBar.resignFirstResponder()
+        
+        activityIndicator.startAnimating()
         
         apiManager.fetchRepositories(for: query) { [weak self] result in
             DispatchQueue.main.async {
@@ -122,8 +142,22 @@ extension SearchController: UISearchBarDelegate {
                 case .Failure(let error):
                     print(error)
                 }
+                
+                self?.activityIndicator.stopAnimating()
             }
         }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.searchTextField.resignFirstResponder()
+        
+        searchBar.searchTextField.text = ""
+        
+        searchBar.showsCancelButton = false
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
     }
 }
 
