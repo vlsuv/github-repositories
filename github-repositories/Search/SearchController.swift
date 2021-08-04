@@ -26,7 +26,7 @@ class SearchController: UIViewController {
         return searchBar
     }()
     
-    private var apiService: APIManagerProtocol = APIManager()
+    private var apiManager: APIManagerProtocol = APIManager()
     
     var repositories: [Repository] = []
     
@@ -39,16 +39,27 @@ class SearchController: UIViewController {
         configureTableView()
     }
     
+    // MARK: - Targets
+    @objc private func didTapDownloadsButton(_ sender: UIBarButtonItem) {
+        let downloadsController = DownloadsController()
+        
+        navigationController?.pushViewController(downloadsController, animated: true)
+    }
+    
     // MARK: - Configures
     private func configureNavigationController() {
         navigationItem.titleView = searchBar
+        
+        let downloadsButton = UIBarButtonItem(image: Image.squareAndArrowDownFill, style: .plain, target: self, action: #selector(didTapDownloadsButton(_:)))
+        
+        navigationItem.leftBarButtonItem = downloadsButton
     }
     
     private func configureTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(RepositoryCell.self, forCellReuseIdentifier: RepositoryCell.identifier)
         
         view.addSubview(tableView)
         tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
@@ -65,10 +76,11 @@ extension SearchController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: RepositoryCell.identifier, for: indexPath) as? RepositoryCell else { return UITableViewCell() }
         
         let repository = repositories[indexPath.row]
-        cell.textLabel?.text = repository.name
+        cell.configure(repository)
+        cell.delegate = self
         
         return cell
     }
@@ -81,11 +93,15 @@ extension SearchController: UITableViewDelegate {
         
         let repository = repositories[indexPath.row]
         
-        guard let url = URL(string: repository.html_url) else { return }
+        guard let url = URL(string: repository.htmlURL) else { return }
         
         let safariViewController = SFSafariViewController(url: url)
         
         present(safariViewController, animated: true, completion: nil)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 48
     }
 }
 
@@ -96,7 +112,7 @@ extension SearchController: UISearchBarDelegate {
         
         searchBar.resignFirstResponder()
         
-        apiService.fetchRepositories(for: query) { [weak self] result in
+        apiManager.fetchRepositories(for: query) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .Succes(let repos):
@@ -108,5 +124,16 @@ extension SearchController: UISearchBarDelegate {
                 }
             }
         }
+    }
+}
+
+// MARK: - RepositoryCellDelegate
+extension SearchController: RepositoryCellDelegate {
+    func didTapGetButton(cell: UITableViewCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        
+        let repository = repositories[indexPath.row]
+        
+        DownloadManager.shared.getZip(for: repository)
     }
 }

@@ -17,6 +17,13 @@
 		67418CAD26BAA647003CF4F0 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67418CAC26BAA647003CF4F0 /* NetworkService.swift */; };
 		67418CB026BAA69C003CF4F0 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67418CAF26BAA69C003CF4F0 /* APIManager.swift */; };
 		67418CB326BAAA71003CF4F0 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67418CB226BAAA71003CF4F0 /* Repository.swift */; };
+		67418CB526BAB762003CF4F0 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67418CB426BAB762003CF4F0 /* Image.swift */; };
+		67418CB726BABA80003CF4F0 /* RepositoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67418CB626BABA80003CF4F0 /* RepositoryCell.swift */; };
+		67418CB926BAC3C1003CF4F0 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67418CB826BAC3C1003CF4F0 /* DownloadManager.swift */; };
+		67418CBB26BADD93003CF4F0 /* DownloadsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67418CBA26BADD93003CF4F0 /* DownloadsController.swift */; };
+		67418CBD26BAE9E2003CF4F0 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67418CBC26BAE9E2003CF4F0 /* Download.swift */; };
+		67418CC126BAF87E003CF4F0 /* DownloadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67418CC026BAF87E003CF4F0 /* DownloadCell.swift */; };
+		67418CC326BB0172003CF4F0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67418CC226BB0172003CF4F0 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +39,13 @@
 		67418CAC26BAA647003CF4F0 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		67418CAF26BAA69C003CF4F0 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		67418CB226BAAA71003CF4F0 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		67418CB426BAB762003CF4F0 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		67418CB626BABA80003CF4F0 /* RepositoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCell.swift; sourceTree = "<group>"; };
+		67418CB826BAC3C1003CF4F0 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
+		67418CBA26BADD93003CF4F0 /* DownloadsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsController.swift; sourceTree = "<group>"; };
+		67418CBC26BAE9E2003CF4F0 /* Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
+		67418CC026BAF87E003CF4F0 /* DownloadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadCell.swift; sourceTree = "<group>"; };
+		67418CC226BB0172003CF4F0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +78,7 @@
 		67418C8E26BA9F6C003CF4F0 /* github-repositories */ = {
 			isa = PBXGroup;
 			children = (
+				67418CBE26BAF852003CF4F0 /* Download */,
 				67418C8F26BA9F6C003CF4F0 /* AppDelegate.swift */,
 				67418C9126BA9F6C003CF4F0 /* SceneDelegate.swift */,
 				67418C9D26BA9F73003CF4F0 /* Info.plist */,
@@ -91,6 +106,7 @@
 			children = (
 				67418CB126BAAA5F003CF4F0 /* Model */,
 				67418C9326BA9F6C003CF4F0 /* SearchController.swift */,
+				67418CB626BABA80003CF4F0 /* RepositoryCell.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -99,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				67418CA626BAA0FE003CF4F0 /* Color.swift */,
+				67418CB426BAB762003CF4F0 /* Image.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -123,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				67418CAF26BAA69C003CF4F0 /* APIManager.swift */,
+				67418CB826BAC3C1003CF4F0 /* DownloadManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -131,6 +149,25 @@
 			isa = PBXGroup;
 			children = (
 				67418CB226BAAA71003CF4F0 /* Repository.swift */,
+				67418CC226BB0172003CF4F0 /* User.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		67418CBE26BAF852003CF4F0 /* Download */ = {
+			isa = PBXGroup;
+			children = (
+				67418CBF26BAF865003CF4F0 /* Model */,
+				67418CBA26BADD93003CF4F0 /* DownloadsController.swift */,
+				67418CC026BAF87E003CF4F0 /* DownloadCell.swift */,
+			);
+			path = Download;
+			sourceTree = "<group>";
+		};
+		67418CBF26BAF865003CF4F0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				67418CBC26BAE9E2003CF4F0 /* Download.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -206,13 +243,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				67418C9426BA9F6C003CF4F0 /* SearchController.swift in Sources */,
+				67418CB526BAB762003CF4F0 /* Image.swift in Sources */,
 				67418CAA26BAA2A3003CF4F0 /* UIView extensions.swift in Sources */,
+				67418CBB26BADD93003CF4F0 /* DownloadsController.swift in Sources */,
 				67418CA726BAA0FE003CF4F0 /* Color.swift in Sources */,
 				67418CB326BAAA71003CF4F0 /* Repository.swift in Sources */,
+				67418CB726BABA80003CF4F0 /* RepositoryCell.swift in Sources */,
 				67418C9026BA9F6C003CF4F0 /* AppDelegate.swift in Sources */,
+				67418CC326BB0172003CF4F0 /* User.swift in Sources */,
 				67418CAD26BAA647003CF4F0 /* NetworkService.swift in Sources */,
+				67418CB926BAC3C1003CF4F0 /* DownloadManager.swift in Sources */,
 				67418C9226BA9F6C003CF4F0 /* SceneDelegate.swift in Sources */,
+				67418CC126BAF87E003CF4F0 /* DownloadCell.swift in Sources */,
 				67418CB026BAA69C003CF4F0 /* APIManager.swift in Sources */,
+				67418CBD26BAE9E2003CF4F0 /* Download.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

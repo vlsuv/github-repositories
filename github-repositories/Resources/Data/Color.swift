@@ -12,4 +12,6 @@ enum Color {
     static let white: UIColor = .white
     static let black: UIColor = .black
     static let red: UIColor = .red
+    static let blue: UIColor = .blue
+    static let gray: UIColor = .lightGray
 }
