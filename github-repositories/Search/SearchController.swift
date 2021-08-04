@@ -17,12 +17,17 @@ class SearchController: UIViewController {
         return tableView
     }()
     
-    private var searchBar: UISearchBar = {
+    private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Search"
         searchBar.sizeToFit()
+        searchBar.delegate = self
         return searchBar
     }()
+    
+    private var apiService: APIManagerProtocol = APIManager()
+    
+    var repositories: [Repository] = []
     
     // MARK: - Init
     override func viewDidLoad() {
@@ -55,12 +60,15 @@ class SearchController: UIViewController {
 // MARK: - UITableViewDataSource
 extension SearchController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return repositories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "\(indexPath)"
+        
+        let repository = repositories[indexPath.row]
+        cell.textLabel?.text = repository.name
+        
         return cell
     }
 }
@@ -70,3 +78,24 @@ extension SearchController: UITableViewDelegate {
     
 }
 
+// MARK: - UISearchBarDelegate
+extension SearchController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let query = searchBar.text else { return }
+        
+        searchBar.resignFirstResponder()
+        
+        apiService.fetchRepositories(for: query) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .Succes(let repos):
+                    self?.repositories = repos
+                    
+                    self?.tableView.reloadData()
+                case .Failure(let error):
+                    print(error)
+                }
+            }
+        }
+    }
+}
