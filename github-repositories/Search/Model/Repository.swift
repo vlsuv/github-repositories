@@ -11,4 +11,5 @@ import UIKit
 struct Repository: Decodable {
     var name: String
     var full_name: String
+    var html_url: String
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class SearchController: UIViewController {
     
@@ -75,7 +76,17 @@ extension SearchController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension SearchController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let repository = repositories[indexPath.row]
+        
+        guard let url = URL(string: repository.html_url) else { return }
+        
+        let safariViewController = SFSafariViewController(url: url)
+        
+        present(safariViewController, animated: true, completion: nil)
+    }
 }
 
 // MARK: - UISearchBarDelegate
