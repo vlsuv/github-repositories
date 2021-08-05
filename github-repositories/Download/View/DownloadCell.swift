@@ -49,7 +49,6 @@ class DownloadCell: UITableViewCell {
         
         addSubviews()
         configureConstraints()
-        
     }
     
     required init?(coder: NSCoder) {

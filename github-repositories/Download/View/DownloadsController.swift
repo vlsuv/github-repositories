@@ -11,20 +11,19 @@ import UIKit
 class DownloadsController: UIViewController {
     
     // MARK: - Properties
+    var presenter: DownloadPresenter?
+    
     private var tableView: UITableView = {
         let tableView = UITableView()
         tableView.tableFooterView = UIView()
         return tableView
     }()
     
-    var downloads: [Download] = []
-    
     // MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Color.white
         
-        getDownloads()
         configureNavigationController()
         configureTableView()
     }
@@ -33,18 +32,12 @@ class DownloadsController: UIViewController {
         print("deinit: \(self)")
     }
     
-    // MARK: - Configures
-    private func getDownloads() {
-        downloads = DownloadManager.shared.downloads
-        
-        DownloadManager.shared.didFinishDownload = { [weak self] download in
-            
-            guard let index = self?.downloads.firstIndex(where: { $0.repository.name == download.repository.name }) else { return }
-            
-            self?.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
-        }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        presenter?.viewDidDisappear()
     }
     
+    // MARK: - Configures
     private func configureNavigationController() {
         navigationItem.title = "Downloads"
     }
@@ -63,15 +56,26 @@ class DownloadsController: UIViewController {
     }
 }
 
+// MARK: - DownloadViewProtocol
+extension DownloadsController: DownloadViewProtocol {
+    func reloadRows(at indexPaths: [IndexPath]) {
+        tableView.reloadRows(at: indexPaths, with: .automatic)
+    }
+}
+
 // MARK: - UITableViewDataSource
 extension DownloadsController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return downloads.count
+        return presenter?.downloads.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: DownloadCell.identifier, for: indexPath) as? DownloadCell else { return UITableViewCell() }
-        cell.configure(downloads[indexPath.row])
+        
+        if let download = presenter?.downloads[indexPath.row] {
+            cell.configure(download)
+        }
+        
         return cell
     }
     

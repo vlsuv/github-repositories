@@ -12,6 +12,8 @@ import SafariServices
 class SearchController: UIViewController {
     
     // MARK: - Properties
+    var presenter: SearchPresenter?
+    
     private var tableView: UITableView = {
         let tableView = UITableView()
         tableView.tableFooterView = UIView()
@@ -34,10 +36,6 @@ class SearchController: UIViewController {
         return activityIndicator
     }()
     
-    private var apiManager: APIManagerProtocol = APIManager()
-    
-    var repositories: [Repository] = []
-    
     // MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,9 +48,7 @@ class SearchController: UIViewController {
     
     // MARK: - Targets
     @objc private func didTapDownloadsButton(_ sender: UIBarButtonItem) {
-        let downloadsController = DownloadsController()
-        
-        navigationController?.pushViewController(downloadsController, animated: true)
+        presenter?.didTapDownloads()
     }
     
     // MARK: - Configures
@@ -85,18 +81,33 @@ class SearchController: UIViewController {
     }
 }
 
+// MARK: - SearchViewProtocol
+extension SearchController: SearchViewProtocol {
+    func succes() {
+        activityIndicator.stopAnimating()
+        
+        tableView.reloadData()
+    }
+    
+    func failure() {
+        activityIndicator.stopAnimating()
+    }
+}
+
 // MARK: - UITableViewDataSource
 extension SearchController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return repositories.count
+        return presenter?.repositories.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: RepositoryCell.identifier, for: indexPath) as? RepositoryCell else { return UITableViewCell() }
         
-        let repository = repositories[indexPath.row]
-        cell.configure(repository)
         cell.delegate = self
+        
+        if let repository = presenter?.repositories[indexPath.row] {
+            cell.configure(repository)
+        }
         
         return cell
     }
@@ -107,13 +118,7 @@ extension SearchController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let repository = repositories[indexPath.row]
-        
-        guard let url = URL(string: repository.htmlURL) else { return }
-        
-        let safariViewController = SFSafariViewController(url: url)
-        
-        present(safariViewController, animated: true, completion: nil)
+        presenter?.didSelectRepo(at: indexPath)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -126,26 +131,13 @@ extension SearchController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let query = searchBar.text else { return }
         
+        presenter?.didTapSearch(with: query)
+        
         searchBar.showsCancelButton = false
         
         searchBar.resignFirstResponder()
         
         activityIndicator.startAnimating()
-        
-        apiManager.fetchRepositories(for: query) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .Succes(let repos):
-                    self?.repositories = repos
-                    
-                    self?.tableView.reloadData()
-                case .Failure(let error):
-                    print(error)
-                }
-                
-                self?.activityIndicator.stopAnimating()
-            }
-        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -166,8 +158,6 @@ extension SearchController: RepositoryCellDelegate {
     func didTapGetButton(cell: UITableViewCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         
-        let repository = repositories[indexPath.row]
-        
-        DownloadManager.shared.getZip(for: repository)
+        presenter?.didTapGet(at: indexPath)
     }
 }

@@ -25,6 +25,13 @@
 		67418CC126BAF87E003CF4F0 /* DownloadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67418CC026BAF87E003CF4F0 /* DownloadCell.swift */; };
 		67418CC326BB0172003CF4F0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67418CC226BB0172003CF4F0 /* User.swift */; };
 		67F8008B26BBE75900D9358D /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F8008A26BBE75900D9358D /* UserSettings.swift */; };
+		67F8008F26BC1D5B00D9358D /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F8008E26BC1D5B00D9358D /* SearchPresenter.swift */; };
+		67F8009226BC210500D9358D /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F8009126BC210500D9358D /* AppCoordinator.swift */; };
+		67F8009526BC212000D9358D /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F8009426BC212000D9358D /* Coordinator.swift */; };
+		67F8009726BC222900D9358D /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F8009626BC222900D9358D /* SearchCoordinator.swift */; };
+		67F8009926BC229600D9358D /* AssemblyModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F8009826BC229600D9358D /* AssemblyModuleBuilder.swift */; };
+		67F8009D26BC253900D9358D /* DownloadCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F8009C26BC253900D9358D /* DownloadCoordinator.swift */; };
+		67F8009F26BC25CC00D9358D /* DownloadPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F8009E26BC25CC00D9358D /* DownloadPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +55,13 @@
 		67418CC026BAF87E003CF4F0 /* DownloadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadCell.swift; sourceTree = "<group>"; };
 		67418CC226BB0172003CF4F0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		67F8008A26BBE75900D9358D /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		67F8008E26BC1D5B00D9358D /* SearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
+		67F8009126BC210500D9358D /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		67F8009426BC212000D9358D /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		67F8009626BC222900D9358D /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
+		67F8009826BC229600D9358D /* AssemblyModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssemblyModuleBuilder.swift; sourceTree = "<group>"; };
+		67F8009C26BC253900D9358D /* DownloadCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadCoordinator.swift; sourceTree = "<group>"; };
+		67F8009E26BC25CC00D9358D /* DownloadPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,11 +94,13 @@
 		67418C8E26BA9F6C003CF4F0 /* github-repositories */ = {
 			isa = PBXGroup;
 			children = (
-				67418CBE26BAF852003CF4F0 /* Download */,
 				67418C8F26BA9F6C003CF4F0 /* AppDelegate.swift */,
 				67418C9126BA9F6C003CF4F0 /* SceneDelegate.swift */,
 				67418C9D26BA9F73003CF4F0 /* Info.plist */,
+				67F8009826BC229600D9358D /* AssemblyModuleBuilder.swift */,
+				67F8009026BC20D100D9358D /* Coordinators */,
 				67418CA426BAA0D6003CF4F0 /* Search */,
+				67418CBE26BAF852003CF4F0 /* Download */,
 				67418CA326BAA097003CF4F0 /* Resources */,
 			);
 			path = "github-repositories";
@@ -107,8 +123,8 @@
 			isa = PBXGroup;
 			children = (
 				67418CB126BAAA5F003CF4F0 /* Model */,
-				67418C9326BA9F6C003CF4F0 /* SearchController.swift */,
-				67418CB626BABA80003CF4F0 /* RepositoryCell.swift */,
+				67F8008D26BC1D3600D9358D /* View */,
+				67F8008C26BC1D2200D9358D /* Presenter */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -161,8 +177,8 @@
 			isa = PBXGroup;
 			children = (
 				67418CBF26BAF865003CF4F0 /* Model */,
-				67418CBA26BADD93003CF4F0 /* DownloadsController.swift */,
-				67418CC026BAF87E003CF4F0 /* DownloadCell.swift */,
+				67F8009B26BC251C00D9358D /* View */,
+				67F8009A26BC251600D9358D /* Presenter */,
 			);
 			path = Download;
 			sourceTree = "<group>";
@@ -173,6 +189,51 @@
 				67418CBC26BAE9E2003CF4F0 /* Download.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		67F8008C26BC1D2200D9358D /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				67F8008E26BC1D5B00D9358D /* SearchPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		67F8008D26BC1D3600D9358D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				67418C9326BA9F6C003CF4F0 /* SearchController.swift */,
+				67418CB626BABA80003CF4F0 /* RepositoryCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		67F8009026BC20D100D9358D /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				67F8009426BC212000D9358D /* Coordinator.swift */,
+				67F8009126BC210500D9358D /* AppCoordinator.swift */,
+				67F8009626BC222900D9358D /* SearchCoordinator.swift */,
+				67F8009C26BC253900D9358D /* DownloadCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		67F8009A26BC251600D9358D /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				67F8009E26BC25CC00D9358D /* DownloadPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		67F8009B26BC251C00D9358D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				67418CBA26BADD93003CF4F0 /* DownloadsController.swift */,
+				67418CC026BAF87E003CF4F0 /* DownloadCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,14 +312,21 @@
 				67418CBB26BADD93003CF4F0 /* DownloadsController.swift in Sources */,
 				67418CA726BAA0FE003CF4F0 /* Color.swift in Sources */,
 				67418CB326BAAA71003CF4F0 /* Repository.swift in Sources */,
+				67F8009526BC212000D9358D /* Coordinator.swift in Sources */,
+				67F8009226BC210500D9358D /* AppCoordinator.swift in Sources */,
 				67418CB726BABA80003CF4F0 /* RepositoryCell.swift in Sources */,
 				67418C9026BA9F6C003CF4F0 /* AppDelegate.swift in Sources */,
 				67418CC326BB0172003CF4F0 /* User.swift in Sources */,
+				67F8009F26BC25CC00D9358D /* DownloadPresenter.swift in Sources */,
 				67418CAD26BAA647003CF4F0 /* NetworkService.swift in Sources */,
 				67418CB926BAC3C1003CF4F0 /* DownloadManager.swift in Sources */,
 				67418C9226BA9F6C003CF4F0 /* SceneDelegate.swift in Sources */,
 				67418CC126BAF87E003CF4F0 /* DownloadCell.swift in Sources */,
 				67F8008B26BBE75900D9358D /* UserSettings.swift in Sources */,
+				67F8009D26BC253900D9358D /* DownloadCoordinator.swift in Sources */,
+				67F8009726BC222900D9358D /* SearchCoordinator.swift in Sources */,
+				67F8009926BC229600D9358D /* AssemblyModuleBuilder.swift in Sources */,
+				67F8008F26BC1D5B00D9358D /* SearchPresenter.swift in Sources */,
 				67418CB026BAA69C003CF4F0 /* APIManager.swift in Sources */,
 				67418CBD26BAE9E2003CF4F0 /* Download.swift in Sources */,
 			);
