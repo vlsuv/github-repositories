@@ -49,7 +49,7 @@ class DownloadPresenter: DownloadPresenterType {
         
         DownloadManager.shared.didFinishDownload = { [weak self] download in
             
-            guard let index = self?.downloads.firstIndex(where: { $0.repository.name == download.repository.name }) else { return }
+            guard let index = self?.downloads.firstIndex(where: { $0.repository.id == download.repository.id }) else { return }
             
             let indexPath = IndexPath(row: index, section: 0)
             
