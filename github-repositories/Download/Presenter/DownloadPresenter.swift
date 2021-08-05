@@ -10,6 +10,7 @@ import UIKit
 
 protocol DownloadViewProtocol: class {
     func reloadRows(at indexPaths: [IndexPath])
+    func reloadView()
 }
 
 protocol DownloadPresenterType {
@@ -54,5 +55,13 @@ class DownloadPresenter: DownloadPresenterType {
             
             self?.view?.reloadRows(at: [indexPath])
         }
+    }
+    
+    func didTapClear() {
+        DownloadManager.shared.deleteDownloads()
+        
+        downloads = []
+        
+        view?.reloadView()
     }
 }

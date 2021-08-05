@@ -37,9 +37,18 @@ class DownloadsController: UIViewController {
         presenter?.viewDidDisappear()
     }
     
+    // MARK: - Targets
+    @objc private func didTapClearButton(sender: UIBarButtonItem) {
+        presenter?.didTapClear()
+    }
+    
     // MARK: - Configures
     private func configureNavigationController() {
         navigationItem.title = "Downloads"
+        
+        let clearButton = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(didTapClearButton(sender:)))
+        
+        navigationItem.rightBarButtonItem = clearButton
     }
     
     private func configureTableView() {
@@ -60,6 +69,10 @@ class DownloadsController: UIViewController {
 extension DownloadsController: DownloadViewProtocol {
     func reloadRows(at indexPaths: [IndexPath]) {
         tableView.reloadRows(at: indexPaths, with: .automatic)
+    }
+    
+    func reloadView() {
+        tableView.reloadData()
     }
 }
 

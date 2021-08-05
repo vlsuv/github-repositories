@@ -46,6 +46,12 @@ class DownloadManager: NSObject {
         
         downloads.append(download)
     }
+    
+    func deleteDownloads() {
+        downloads = []
+        
+        UserSettings.shared.downloads = []
+    }
 }
 
 // MARK: - URLSessionDownloadDelegate
