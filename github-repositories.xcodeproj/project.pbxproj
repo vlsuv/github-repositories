@@ -24,6 +24,7 @@
 		67418CBD26BAE9E2003CF4F0 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67418CBC26BAE9E2003CF4F0 /* Download.swift */; };
 		67418CC126BAF87E003CF4F0 /* DownloadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67418CC026BAF87E003CF4F0 /* DownloadCell.swift */; };
 		67418CC326BB0172003CF4F0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67418CC226BB0172003CF4F0 /* User.swift */; };
+		67F8008B26BBE75900D9358D /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F8008A26BBE75900D9358D /* UserSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		67418CBC26BAE9E2003CF4F0 /* Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
 		67418CC026BAF87E003CF4F0 /* DownloadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadCell.swift; sourceTree = "<group>"; };
 		67418CC226BB0172003CF4F0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		67F8008A26BBE75900D9358D /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 			children = (
 				67418CAF26BAA69C003CF4F0 /* APIManager.swift */,
 				67418CB826BAC3C1003CF4F0 /* DownloadManager.swift */,
+				67F8008A26BBE75900D9358D /* UserSettings.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 				67418CB926BAC3C1003CF4F0 /* DownloadManager.swift in Sources */,
 				67418C9226BA9F6C003CF4F0 /* SceneDelegate.swift in Sources */,
 				67418CC126BAF87E003CF4F0 /* DownloadCell.swift in Sources */,
+				67F8008B26BBE75900D9358D /* UserSettings.swift in Sources */,
 				67418CB026BAA69C003CF4F0 /* APIManager.swift in Sources */,
 				67418CBD26BAE9E2003CF4F0 /* Download.swift in Sources */,
 			);

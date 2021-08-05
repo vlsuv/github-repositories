@@ -37,10 +37,10 @@ class DownloadCell: UITableViewCell {
         return stackView
     }()
     
-    private var progressView: UIProgressView = {
-        let progressView = UIProgressView(progressViewStyle: .default)
-        progressView.progress = 0
-        return progressView
+    private var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.hidesWhenStopped = true
+        return activityIndicator
     }()
     
     // MARK: - Init
@@ -49,6 +49,7 @@ class DownloadCell: UITableViewCell {
         
         addSubviews()
         configureConstraints()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -56,30 +57,28 @@ class DownloadCell: UITableViewCell {
     }
     
     func configure(_ download: Download) {
+        if download.isDownloaded {
+            accessoryView = UIImageView(image: UIImage(systemName: "checkmark"))
+        } else {
+            accessoryView = activityIndicator
+            activityIndicator.startAnimating()
+        }
+        
         repositoryNameLabel.text = download.repository.name
         userNameLabel.text = download.repository.owner.login
-        progressView.progress = download.progress
     }
     
     // MARK: - Configures
     private func addSubviews() {
-        [progressView, textStackView]
+        [textStackView]
             .forEach { contentView.addSubview($0) }
     }
     
     private func configureConstraints() {
-        progressView.anchor(left: contentView.leftAnchor,
-                            right: contentView.rightAnchor,
-                            bottom: contentView.bottomAnchor,
-                            paddingLeft: 18,
-                            paddingRight: 18,
-                            paddingBottom: 8,
-                            height: 2)
-        
         textStackView.anchor(top: contentView.topAnchor,
                              left: contentView.leftAnchor,
                              right: contentView.rightAnchor,
-                             bottom: progressView.topAnchor,
+                             bottom: contentView.bottomAnchor,
                              paddingTop: 8,
                              paddingLeft: 18,
                              paddingRight: 18,

@@ -17,13 +17,15 @@ class DownloadManager: NSObject {
         return URLSession(configuration: sessionConfiguration, delegate: self, delegateQueue: .main)
     }
     
-    var activeDownloads: [URL: Download] = [:]
+    var downloads: [Download] = []
     
     var didFinishDownload: ((Download) -> ())?
     
     // MARK: - Init
     private init(sessionConfiguration: URLSessionConfiguration = .background(withIdentifier: "github-repositories.background")) {
         self.sessionConfiguration = sessionConfiguration
+        
+        downloads = UserSettings.shared.downloads
     }
     
     static var shared = DownloadManager()
@@ -42,9 +44,7 @@ class DownloadManager: NSObject {
         
         download.task?.resume()
         
-        download.isDownloading = true
-        
-        activeDownloads[url] = download
+        downloads.append(download)
     }
 }
 
@@ -52,21 +52,25 @@ class DownloadManager: NSObject {
 extension DownloadManager: URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         
-        guard let sourceURL = downloadTask.originalRequest?.url, let download = activeDownloads[sourceURL] else { return }
+        guard let index = downloads.firstIndex(where: { $0.task == downloadTask }) else {
+            return
+        }
         
-        download.progress = 1
+        let download = downloads[index]
         
-        download.isDownloading = false
+        download.isDownloaded = true
+        
+        UserSettings.shared.downloads = downloads
         
         didFinishDownload?(download)
     }
     
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-        
-        guard let url = downloadTask.originalRequest?.url, let download = activeDownloads[url] else { return }
-        
-        let progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
-        
-        download.progress = progress
+    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+            let completionHandler = appDelegate.backgroundSessionCompletionHandler {
+            appDelegate.backgroundSessionCompletionHandler = nil
+            
+            completionHandler()
+        }
     }
 }

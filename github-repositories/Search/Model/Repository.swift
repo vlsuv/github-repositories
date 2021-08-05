@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct Repository: Decodable {
+struct Repository: Codable {
     var name: String
     var fullName: String
     var htmlURL: String
@@ -34,5 +34,15 @@ struct Repository: Decodable {
         self.url = try? values.decode(String.self, forKey: .url)
         self.isPrivate = try values.decode(Bool.self, forKey: .isPrivate)
         self.owner = try values.decode(User.self, forKey: .owner)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(name, forKey: .name)
+        try container.encode(fullName, forKey: .fullName)
+        try container.encode(htmlURL, forKey: .htmlURL)
+        try? container.encode(url, forKey: .url)
+        try container.encode(isPrivate, forKey: .isPrivate)
+        try container.encode(owner, forKey: .owner)
     }
 }

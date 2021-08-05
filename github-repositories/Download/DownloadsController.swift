@@ -35,7 +35,7 @@ class DownloadsController: UIViewController {
     
     // MARK: - Configures
     private func getDownloads() {
-        downloads = DownloadManager.shared.activeDownloads.map { $0.value }
+        downloads = DownloadManager.shared.downloads
         
         DownloadManager.shared.didFinishDownload = { [weak self] download in
             

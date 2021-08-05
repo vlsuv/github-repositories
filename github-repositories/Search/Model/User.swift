@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct User: Decodable {
+struct User: Codable {
     var login: String
 }
